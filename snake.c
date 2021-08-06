@@ -32,6 +32,13 @@ int main()
     a->x = rand() % (maxX - 2) + 1;
     a->y = rand() % (maxY - 2) + 1;
 
+    mvprintw((int)maxY / 2 - 1, (int)maxX / 2 - 3, "Snake");
+    mvprintw((int)maxY / 2 + 1, (int)maxX / 2 - 11, "Press any key to play");
+
+title:
+    if (getch() < 0)
+        goto title; // keep looping until a key is pressed
+
     while (s->alive)
     { // main game loop
         clear();
@@ -50,6 +57,7 @@ int main()
                 goto pause; // keep looping until a key is pressed
             printw("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
             break;
+
         case 'w':
         case KEY_UP:
         case 'a':
