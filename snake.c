@@ -66,6 +66,13 @@ int main()
             s->alive = FALSE;
             break;
         }
+        for (int i=1; i < s->len; i++) {
+            if (s->segs[0].x == s->segs[i].x &&
+                s->segs[0].y == s->segs[i].y) {
+                s->alive = FALSE;
+                break;
+            }
+        }
 
         draw();
         refresh();
