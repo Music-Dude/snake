@@ -2,6 +2,8 @@ void draw();
 void menu();
 
 int speeds[] = {80, 60, 40, 20};
+char *modes[] = {"Easy", "Medium", "Difficult", "Expert"};
+
 
 struct point
 {

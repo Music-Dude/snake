@@ -6,6 +6,8 @@
 
 int maxY, maxX;
 int speed;
+char mode[11];
+
 struct snake *s;
 struct point *a;
 
@@ -95,6 +97,7 @@ void draw()
 {
     box(stdscr, 0, 0);
     mvprintw(0, maxX - 10, "Score: %d", s->len);
+    mvprintw(0, 2, "Mode: %s", mode);
 
     struct point prev[100];
     memcpy(prev, s->segs, sizeof(s->segs));
@@ -139,8 +142,7 @@ void draw()
 void menu()
 {
     WINDOW *menu;
-    char *options[4] = {"Easy", "Medium", "Difficult", "Expert"};
-    char sel[11];
+    char sel[10];
     int ch, i = 0;
 
     menu = newwin(7, 14, (int)maxY / 2 - 3, (int)maxX / 2 - 7); // mode menu window
@@ -155,7 +157,7 @@ void menu()
             wattron(menu, A_STANDOUT);
         else
             wattroff(menu, A_STANDOUT);
-        sprintf(sel, "%-10s", options[i]);
+        sprintf(sel, "%-10s", modes[i]);
         mvwprintw(menu, i + 1, 2, sel);
     }
 
@@ -165,7 +167,7 @@ void menu()
 
     while ((ch = wgetch(menu)) != '\n' && ch != KEY_ENTER)
     {
-        sprintf(sel, "%-10s", options[i]);
+        sprintf(sel, "%-10s", modes[i]);
         mvwprintw(menu, i + 1, 2, "%s", sel);
         switch (ch)
         {
@@ -185,10 +187,11 @@ void menu()
         }
 
         wattron(menu, A_STANDOUT);
-        sprintf(sel, "%-10s", options[i]);
+        sprintf(sel, "%-10s", modes[i]);
         mvwprintw(menu, i + 1, 2, "%s", sel);
         wattroff(menu, A_STANDOUT);
     }
     speed = speeds[i];
+    strcpy(mode, modes[i]);
     delwin(menu);
 }
