@@ -61,14 +61,17 @@ int main()
             s->dir = ch;
         }
 
-        if (s->segs[0].x == 1 || s->segs[0].x == maxX-1 ||
-                s->segs[0].y == 1 || s->segs[0].y == maxY-1) {
+        if (s->segs[0].x == 1 || s->segs[0].x == maxX - 1 ||
+            s->segs[0].y == 1 || s->segs[0].y == maxY - 1)
+        {
             s->alive = FALSE;
             break;
         }
-        for (int i=1; i < s->len; i++) {
+        for (int i = 1; i < s->len; i++)
+        {
             if (s->segs[0].x == s->segs[i].x &&
-                s->segs[0].y == s->segs[i].y) {
+                s->segs[0].y == s->segs[i].y)
+            {
                 s->alive = FALSE;
                 break;
             }
@@ -117,8 +120,9 @@ void draw()
         s->len++;
     }
 
-    for (int i=1; i < s->len; i++) {
-        s->segs[i] = prev[i-1];
+    for (int i = 1; i < s->len; i++)
+    {
+        s->segs[i] = prev[i - 1];
         mvaddch(s->segs[i].y, s->segs[i].x, '=');
     }
 
