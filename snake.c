@@ -36,6 +36,7 @@ int main()
     a->y = rand() % (maxY - 2) + 1;
 
     mvaddstr((int)maxY / 2 - 5, (int)maxX / 2 - 3, "Snake");
+    mvaddstr((int)maxY / 2 + 5, (int)maxX / 2 - 13, "Press '?' to view controls");
     refresh();
     menu();
 
@@ -184,6 +185,17 @@ void menu()
             i++;
             i = (i > 3) ? 0 : i;
             break;
+        case '?':
+            mvprintw(1, 2, "Controls:");
+            mvprintw(2, 4, "w or Up Arrow Key       - Move up");
+            mvprintw(3, 4, "a or Left Arrow Key     - Move left");
+            mvprintw(4, 4, "s or Down Arrow Key     - Move down");
+            mvprintw(5, 4, "d or Right Arrow Key    - Move right");
+            mvprintw(7, 2, "Game:");
+            mvprintw(8, 4, "p or Space              - Pause");
+            mvprintw(9, 4, "q                       - Quit");
+
+            refresh();
         }
 
         wattron(menu, A_STANDOUT);
