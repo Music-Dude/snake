@@ -5,6 +5,7 @@
 #include "snake.h"
 
 int maxY, maxX;
+int speed;
 struct snake *s;
 struct point *a;
 
@@ -32,12 +33,9 @@ int main()
     a->x = rand() % (maxX - 2) + 1;
     a->y = rand() % (maxY - 2) + 1;
 
-    mvprintw((int)maxY / 2 - 1, (int)maxX / 2 - 3, "Snake");
-    mvprintw((int)maxY / 2 + 1, (int)maxX / 2 - 11, "Press any key to play");
-
-title:
-    if (getch() < 0)
-        goto title; // keep looping until a key is pressed
+    mvaddstr((int)maxY / 2 - 5, (int)maxX / 2 - 3, "Snake");
+    refresh();
+    menu();
 
     while (s->alive)
     { // main game loop
@@ -87,7 +85,7 @@ title:
 
         draw();
         refresh();
-        napms(50);
+        napms(speed);
     }
 
     endwin();
@@ -136,4 +134,61 @@ void draw()
 
     mvaddch(s->segs[0].y, s->segs[0].x, '>');
     mvaddstr(a->y, a->x, "a"); // draw apple
+}
+
+void menu()
+{
+    WINDOW *menu;
+    char *options[4] = {"Easy", "Medium", "Difficult", "Expert"};
+    char sel[11];
+    int ch, i = 0;
+
+    menu = newwin(7, 14, (int)maxY / 2 - 3, (int)maxX / 2 - 7); // mode menu window
+    noecho();
+    keypad(menu, TRUE);
+    box(menu, 0, 0);
+    curs_set(0);
+
+    for (i = 0; i < 4; i++)
+    {
+        if (i == 0)
+            wattron(menu, A_STANDOUT);
+        else
+            wattroff(menu, A_STANDOUT);
+        sprintf(sel, "%-10s", options[i]);
+        mvwprintw(menu, i + 1, 2, sel);
+    }
+
+    wrefresh(menu);
+
+    i = 0;
+
+    while ((ch = wgetch(menu)) != '\n' && ch != KEY_ENTER)
+    {
+        sprintf(sel, "%-10s", options[i]);
+        mvwprintw(menu, i + 1, 2, "%s", sel);
+        switch (ch)
+        {
+        case 'q':
+            endwin();
+            exit(0);
+        case 'w':
+        case KEY_UP:
+            i--;
+            i = (i < 0) ? 3 : i;
+            break;
+        case 's':
+        case KEY_DOWN:
+            i++;
+            i = (i > 3) ? 0 : i;
+            break;
+        }
+
+        wattron(menu, A_STANDOUT);
+        sprintf(sel, "%-10s", options[i]);
+        mvwprintw(menu, i + 1, 2, "%s", sel);
+        wattroff(menu, A_STANDOUT);
+    }
+    speed = speeds[i];
+    delwin(menu);
 }
