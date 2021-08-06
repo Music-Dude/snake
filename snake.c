@@ -93,7 +93,7 @@ int main()
 
 void draw()
 {
-    box(stdscr, '|', '-');
+    box(stdscr, 0, 0);
     mvprintw(0, maxX - 10, "Score: %d", s->len);
 
     struct point prev[100];
