@@ -119,7 +119,7 @@ int main()
 void draw()
 {
     box(stdscr, 0, 0);
-    mvprintw(0, maxX - 10, "Score: %d", s->len);
+    mvprintw(0, maxX - 10, "Score: %d", s->len - 1);
     mvprintw(0, 2, "Mode: %s", mode);
 
     struct point prev[100];
