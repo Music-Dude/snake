@@ -29,7 +29,7 @@ int main()
 
     s->alive = TRUE;
     s->len = 1;
-    s->dir = 'd'; // start going right
+    s->dir = 3; // start going right
     s->segs[0].x = (int)maxX / 2;
     s->segs[0].y = (int)maxY / 2; // start snake in the middle
     a->x = rand() % (maxX - 2) + 1;
@@ -44,7 +44,7 @@ int main()
     { // main game loop
         clear();
         int ch = getch();
-        mvprintw(50, 50, "%c", ch);
+
         switch (ch)
         {
         case 'q':
@@ -58,16 +58,34 @@ int main()
                 goto pause; // keep looping until a key is pressed
             printw("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
             break;
-
         case 'w':
         case KEY_UP:
+            if (s->dir != 2 || s->len == 1)
+            {
+                s->dir = 0;
+            }
+            break;
         case 'a':
         case KEY_LEFT:
+            if (s->dir != 3 || s->len == 1)
+            {
+                s->dir = 1;
+            }
+            break;
         case 's':
         case KEY_DOWN:
+            if (s->dir != 0 || s->len == 1)
+            {
+                s->dir = 2;
+            }
+            break;
         case 'd':
         case KEY_RIGHT:
-            s->dir = ch;
+            if (s->dir != 1 || s->len == 1)
+            {
+                s->dir = 3;
+            }
+            break;
         }
 
         if (s->segs[0].x == 1 || s->segs[0].x == maxX - 1 ||
@@ -105,20 +123,16 @@ void draw()
 
     switch (s->dir)
     {
-    case KEY_UP:
-    case 'w':
+    case 0:
         s->segs[0].y--;
         break;
-    case KEY_LEFT:
-    case 'a':
+    case 1:
         s->segs[0].x--;
         break;
-    case KEY_DOWN:
-    case 's':
+    case 2:
         s->segs[0].y++;
         break;
-    case KEY_RIGHT:
-    case 'd':
+    case 3:
         s->segs[0].x++;
         break;
     }

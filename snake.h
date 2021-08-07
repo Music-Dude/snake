@@ -15,6 +15,6 @@ struct snake
 {
     struct point segs[100];
     bool alive;
-    int len;
-    int dir;
+    unsigned int len;
+    unsigned int dir : 2;
 };
