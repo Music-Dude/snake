@@ -59,6 +59,7 @@ int main()
             printw("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
             break;
         case 'w':
+        case 'k':
         case KEY_UP:
             if (s->dir != 2 || s->len == 1)
             {
@@ -66,6 +67,7 @@ int main()
             }
             break;
         case 'a':
+        case 'h':
         case KEY_LEFT:
             if (s->dir != 3 || s->len == 1)
             {
@@ -73,6 +75,7 @@ int main()
             }
             break;
         case 's':
+        case 'j':
         case KEY_DOWN:
             if (s->dir != 0 || s->len == 1)
             {
@@ -80,6 +83,7 @@ int main()
             }
             break;
         case 'd':
+        case 'l':
         case KEY_RIGHT:
             if (s->dir != 1 || s->len == 1)
             {
@@ -180,7 +184,7 @@ void menu()
 
     i = 0;
 
-    while ((ch = wgetch(menu)) != '\n' && ch != KEY_ENTER)
+    while ((ch = wgetch(menu)) != '\n' && ch != KEY_ENTER && ch != ' ')
     {
         sprintf(sel, "%-10s", modes[i]);
         mvwprintw(menu, i + 1, 2, "%s", sel);
@@ -190,11 +194,13 @@ void menu()
             endwin();
             exit(0);
         case 'w':
+        case 'k':
         case KEY_UP:
             i--;
             i = (i < 0) ? 3 : i;
             break;
         case 's':
+        case 'j':
         case KEY_DOWN:
             i++;
             i = (i > 3) ? 0 : i;
