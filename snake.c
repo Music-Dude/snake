@@ -4,10 +4,7 @@
 #include <time.h>
 #include "snake.h"
 
-int maxY, maxX;
-int speed;
-int highscore = 0;
-int lastscore;
+int maxY, maxX, speed, lastscore, highscore = 0;
 char mode[11];
 
 struct snake *s;
@@ -39,7 +36,6 @@ int main()
 
     mvaddstr((int)maxY / 2 - 5, (int)maxX / 2 - 3, "Snake");
     mvaddstr((int)maxY / 2 + 5, (int)maxX / 2 - 13, "Press '?' to view controls");
-    refresh();
     menu();
 
     while (s->alive)
@@ -98,7 +94,6 @@ int main()
             s->segs[0].y == 1 || s->segs[0].y == maxY - 1)
         {
             s->alive = FALSE;
-            break;
         }
         for (int i = 1; i < s->len; i++)
         {
@@ -169,11 +164,12 @@ void menu()
 
     menu = newwin(7, 14, (int)maxY / 2 - 3, (int)maxX / 2 - 7); // mode menu window
     keypad(menu, TRUE);
+    box(stdscr, 0, 0);
     box(menu, 0, 0);
     curs_set(0);
 
-    mvprintw(0, 2, "Score: %d", lastscore);
-    mvprintw(0, maxX - 9, "Best: %-3d", highscore);
+    mvprintw(0, 2, "Best: %d", highscore);
+    mvprintw(0, maxX - 10, "Score: %d", lastscore);
     refresh();
 
     wattron(menu, A_STANDOUT);
