@@ -22,6 +22,9 @@ int main()
     curs_set(0);
     nodelay(stdscr, TRUE); // init curses settings
     srand(time(NULL));     // seed time for random
+    start_color(); // set color pairs for snake and apple
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_RED, COLOR_BLACK);
 
     maxY = getmaxy(stdscr);
     maxX = getmaxx(stdscr);
@@ -34,7 +37,9 @@ int main()
     a->x = rand() % (maxX - 2) + 1;
     a->y = rand() % (maxY - 2) + 1;
 
+    attron(COLOR_PAIR(1));
     mvaddstr((int)maxY / 2 - 5, (int)maxX / 2 - 3, "Snake");
+    attroff(COLOR_PAIR(1));
     mvaddstr((int)maxY / 2 + 5, (int)maxX / 2 - 13, "Press '?' to view controls");
     menu();
 
@@ -146,7 +151,8 @@ void draw()
         a->y = rand() % (maxY - 2) + 1;
         s->len++;
     }
-
+    
+    attron(COLOR_PAIR(1));
     for (int i = 1; i < s->len; i++)
     {
         s->segs[i] = prev[i - 1];
@@ -154,7 +160,9 @@ void draw()
     }
 
     mvaddch(s->segs[0].y, s->segs[0].x, '>');
-    mvaddstr(a->y, a->x, "a"); // draw apple
+    attron(COLOR_PAIR(2));
+    mvaddch(a->y, a->x, 'a'); // draw apple
+    attroff(COLOR_PAIR(2));
 }
 
 void menu()
