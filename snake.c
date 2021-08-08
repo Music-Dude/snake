@@ -6,6 +6,8 @@
 
 int maxY, maxX;
 int speed;
+int highscore = 0;
+int lastscore;
 char mode[11];
 
 struct snake *s;
@@ -113,6 +115,8 @@ int main()
         napms(speed);
     }
 
+    lastscore = s->len - 1;
+    highscore = lastscore > highscore ? lastscore : highscore;
     main();
 }
 
@@ -167,6 +171,10 @@ void menu()
     keypad(menu, TRUE);
     box(menu, 0, 0);
     curs_set(0);
+
+    mvprintw(0, 2, "Score: %d", lastscore);
+    mvprintw(0, maxX - 9, "Best: %-3d", highscore);
+    refresh();
 
     wattron(menu, A_STANDOUT);
     for (i = 0; i < 4; i++)
