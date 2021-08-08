@@ -113,7 +113,6 @@ int main()
         napms(speed);
     }
 
-    printw()
     main();
 }
 
@@ -162,23 +161,18 @@ void draw()
 void menu()
 {
     WINDOW *menu;
-    char sel[10];
     int ch, i = 0;
 
     menu = newwin(7, 14, (int)maxY / 2 - 3, (int)maxX / 2 - 7); // mode menu window
-    noecho();
     keypad(menu, TRUE);
     box(menu, 0, 0);
     curs_set(0);
 
+    wattron(menu, A_STANDOUT);
     for (i = 0; i < 4; i++)
     {
-        if (i == 0)
-            wattron(menu, A_STANDOUT);
-        else
-            wattroff(menu, A_STANDOUT);
-        sprintf(sel, "%-10s", modes[i]);
-        mvwprintw(menu, i + 1, 2, sel);
+        mvwprintw(menu, i + 1, 2, "%-10s", modes[i]);
+        wattroff(menu, A_STANDOUT);
     }
 
     wrefresh(menu);
@@ -187,8 +181,7 @@ void menu()
 
     while ((ch = wgetch(menu)) != '\n' && ch != KEY_ENTER && ch != ' ')
     {
-        sprintf(sel, "%-10s", modes[i]);
-        mvwprintw(menu, i + 1, 2, "%s", sel);
+        mvwprintw(menu, i + 1, 2, "%-10s", modes[i]);
         switch (ch)
         {
         case 'q':
@@ -220,8 +213,7 @@ void menu()
         }
 
         wattron(menu, A_STANDOUT);
-        sprintf(sel, "%-10s", modes[i]);
-        mvwprintw(menu, i + 1, 2, "%s", sel);
+        mvwprintw(menu, i + 1, 2, "%-10s", modes[i]);
         wattroff(menu, A_STANDOUT);
     }
     speed = speeds[i];
