@@ -48,8 +48,8 @@ int main()
         switch (ch)
         {
         case 'q':
-            s->alive = FALSE;
-            break;
+            endwin();
+            exit(0);
         case ' ':
         case 'p':
             mvaddstr((int)maxY / 2, (int)maxX / 2 - 15, "Paused. Press any key to resume");
@@ -113,7 +113,8 @@ int main()
         napms(speed);
     }
 
-    endwin();
+    printw()
+    main();
 }
 
 void draw()
